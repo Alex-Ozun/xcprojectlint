@@ -14,11 +14,14 @@
 
 import Foundation
 
+public protocol Identifiable {
+  var id: String { get }
+}
+
 /// Many things are represented by an `id`, but they have a user-
 /// friendly name. This protocol describes the two pieces of data
 /// we need to describe errors in a meaningful way.
-protocol TitledNode: CustomDebugStringConvertible {
-  var id: String { get }
+public protocol TitledNode: Identifiable, CustomDebugStringConvertible {
   var title: String { get }
 }
 
