@@ -117,7 +117,7 @@ public struct CopyFilesBuildPhase: CustomDebugStringConvertible {
   let id: String
   let dstSubfolderSpec: String
   let files: [String]
-  let name: String
+  public let name: String
   let dstPath: String
   let runOnlyForDeploymentPostprocessing: Bool
   let buildActionMask: String
@@ -249,7 +249,7 @@ public struct NativeTarget: CustomDebugStringConvertible {
   let productReference: String
   let dependencies: [String]
   let buildConfigurationList: String
-  let buildPhases: [String]
+  public let buildPhases: [String]
   public var debugDescription: String
   
   init(value: Dictionary<String, Any>) {
