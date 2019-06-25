@@ -149,7 +149,7 @@ public struct FileReference: TitledNode {
   let lineEnding: String?
   let xcLanguageSpecificationIdentifier: String?
   let includeInIndex: Bool?
-  var debugDescription: String
+  public var debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>, title: String, projectPath: String) {
     identifyUnparsedKeys(value, knownKeys: ["path", "name", "explicitFileType", "lastKnownFileType", "sourceTree", "fileEncoding", "lineEnding", "xcLanguageSpecificationIdentifier", "includeInIndex"])
