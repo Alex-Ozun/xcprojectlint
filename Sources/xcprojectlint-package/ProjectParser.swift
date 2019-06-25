@@ -80,11 +80,11 @@ struct BuildConfigurationList: TitledNode {
   }
 }
 
-struct BuildFile: CustomDebugStringConvertible {
+public struct BuildFile: CustomDebugStringConvertible {
   let key: String
   let fileRef: String
   
-  var debugDescription: String
+  public var debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["fileRef", "settings"])
@@ -113,7 +113,7 @@ struct ContainerItemProxy: CustomDebugStringConvertible {
   }
 }
 
-struct CopyFilesBuildPhase: CustomDebugStringConvertible {
+public struct CopyFilesBuildPhase: CustomDebugStringConvertible {
   let id: String
   let dstSubfolderSpec: String
   let files: [String]
@@ -121,7 +121,7 @@ struct CopyFilesBuildPhase: CustomDebugStringConvertible {
   let dstPath: String
   let runOnlyForDeploymentPostprocessing: Bool
   let buildActionMask: String
-  var debugDescription: String
+  public var debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["dstSubfolderSpec", "files", "name", "dstPath", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
@@ -169,12 +169,12 @@ public struct FileReference: TitledNode {
   }
 }
 
-struct FrameworksBuildPhase: CustomDebugStringConvertible {
+public struct FrameworksBuildPhase: CustomDebugStringConvertible {
   let id: String
   let files: [String]
   let runOnlyForDeploymentPostprocessing: Bool
   let buildActionMask: String
-  var debugDescription: String
+  public var debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
@@ -298,12 +298,12 @@ struct ProjectNode: CustomDebugStringConvertible {
   }
 }
 
-struct ResourcesBuildPhase: CustomDebugStringConvertible {
+public struct ResourcesBuildPhase: CustomDebugStringConvertible {
   let id: String
   let files: [String]
   let runOnlyForDeploymentPostprocessing: Bool
   let buildActionMask: String
-  var debugDescription: String
+  public var debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
@@ -344,12 +344,12 @@ struct ShellScriptBuildPhase: CustomDebugStringConvertible {
   }
 }
 
-struct SourcesBuildPhase: CustomDebugStringConvertible {
+public struct SourcesBuildPhase: CustomDebugStringConvertible {
   let id: String
   let files: [String]
   let runOnlyForDeploymentPostprocessing: Bool
   let buildActionMask: String
-  var debugDescription: String
+  public var debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
@@ -376,13 +376,13 @@ struct TargetDependency: CustomDebugStringConvertible {
   }
 }
 
-struct VariantGroup: CustomDebugStringConvertible {
+public struct VariantGroup: CustomDebugStringConvertible {
   let name: String?
   let path: String?
   let sourceTree: String
   let children: [String]
   
-  var debugDescription: String
+  public var debugDescription: String
   
   init(value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["name", "path", "sourceTree", "children"])
@@ -581,18 +581,18 @@ public class ProjectParser {
   
   var buildConfigurationLists = Dictionary<String, BuildConfigurationList>()
   var buildConfigurations = [BuildConfiguration]()
-  var buildFiles = Dictionary<String, BuildFile>()
+  public var buildFiles = Dictionary<String, BuildFile>()
   var containerItemProxies = [ContainerItemProxy]()
-  var copyFilesPhases = [CopyFilesBuildPhase]()
-  var fileReferences = Dictionary<String, FileReference>()
-  var frameworksBuildPhases = [FrameworksBuildPhase]()
+  public var copyFilesPhases = [CopyFilesBuildPhase]()
+  public var fileReferences = Dictionary<String, FileReference>()
+  public var frameworksBuildPhases = [FrameworksBuildPhase]()
   var groups = Dictionary<String, Group>()
   var legacyTargets = [LegacyTarget]()
-  var nativeTargets = [NativeTarget]()
+  public var nativeTargets = [NativeTarget]()
   var projectNodes = [ProjectNode]()
-  var resourceBuildPhases = [ResourcesBuildPhase]()
+  public var resourceBuildPhases = [ResourcesBuildPhase]()
   var shellScriptBuildPhases = [ShellScriptBuildPhase]()
-  var sourcesBuildPhases = [SourcesBuildPhase]()
+  public var sourcesBuildPhases = [SourcesBuildPhase]()
   var targetDependencies = [TargetDependency]()
   var titles = Dictionary<String, String>()
   var variantGroups = [VariantGroup]()
