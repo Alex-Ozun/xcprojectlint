@@ -114,6 +114,7 @@ struct ContainerItemProxy: CustomDebugStringConvertible {
 }
 
 struct CopyFilesBuildPhase: CustomDebugStringConvertible {
+  let id: String
   let dstSubfolderSpec: String
   let files: [String]
   let name: String
@@ -122,9 +123,10 @@ struct CopyFilesBuildPhase: CustomDebugStringConvertible {
   let buildActionMask: String
   var debugDescription: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["dstSubfolderSpec", "files", "name", "dstPath", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
     self.dstSubfolderSpec = value.string(forKey: "dstSubfolderSpec", container: "(type(of: self))")
+    self.id = key
     self.files = value["files"] as! [String]
     self.name = value["name"] as? String ?? "Untitled"
     self.dstPath = value.string(forKey: "dstPath", container: "(type(of: self))")
@@ -168,13 +170,15 @@ struct FileReference: TitledNode {
 }
 
 struct FrameworksBuildPhase: CustomDebugStringConvertible {
+  let id: String
   let files: [String]
   let runOnlyForDeploymentPostprocessing: Bool
   let buildActionMask: String
   var debugDescription: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
+    self.id = key
     self.files = value["files"] as! [String]
     self.runOnlyForDeploymentPostprocessing = (value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))")) == "1"
     self.buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
@@ -295,13 +299,15 @@ struct ProjectNode: CustomDebugStringConvertible {
 }
 
 struct ResourcesBuildPhase: CustomDebugStringConvertible {
+  let id: String
   let files: [String]
   let runOnlyForDeploymentPostprocessing: Bool
   let buildActionMask: String
   var debugDescription: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
+    self.id = key
     self.files = value["files"] as! [String]
     self.runOnlyForDeploymentPostprocessing = (value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))")) == "1"
     self.buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
@@ -339,13 +345,15 @@ struct ShellScriptBuildPhase: CustomDebugStringConvertible {
 }
 
 struct SourcesBuildPhase: CustomDebugStringConvertible {
+  let id: String
   let files: [String]
   let runOnlyForDeploymentPostprocessing: Bool
   let buildActionMask: String
   var debugDescription: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
+    self.id = key
     self.files = value["files"] as! [String]
     self.runOnlyForDeploymentPostprocessing = (value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))")) == "1"
     self.buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
@@ -635,7 +643,7 @@ init(project: Dictionary<String, Any>, projectText: String, projectPath: String)
           let target = NativeTarget(value: node)
           nativeTargets.append(target)
         case "PBXResourcesBuildPhase":
-          let phase = ResourcesBuildPhase(value: node)
+          let phase = ResourcesBuildPhase(key: key, value: node)
           resourceBuildPhases.append(phase)
         case "XCConfigurationList":
           let configurationList = BuildConfigurationList(key: key, value: node, title: title(key, titles: titles))
@@ -653,13 +661,13 @@ init(project: Dictionary<String, Any>, projectText: String, projectPath: String)
           let project = ProjectNode(value: node)
           projectNodes.append(project)
         case "PBXFrameworksBuildPhase":
-          let buildPhase = FrameworksBuildPhase(value: node)
+          let buildPhase = FrameworksBuildPhase(key: key, value: node)
           frameworksBuildPhases.append(buildPhase)
         case "PBXShellScriptBuildPhase":
           let buildPhase = ShellScriptBuildPhase(value: node)
           shellScriptBuildPhases.append(buildPhase)
         case "PBXSourcesBuildPhase":
-          let buildPhase = SourcesBuildPhase(value: node)
+          let buildPhase = SourcesBuildPhase(key: key, value: node)
           sourcesBuildPhases.append(buildPhase)
         case "PBXTargetDependency":
           let targetDependency = TargetDependency(value: node)
@@ -668,7 +676,7 @@ init(project: Dictionary<String, Any>, projectText: String, projectPath: String)
           let variantGroup = VariantGroup(value: node)
           variantGroups.append(variantGroup)
         case "PBXCopyFilesBuildPhase":
-          let buildPhase = CopyFilesBuildPhase(value: node)
+          let buildPhase = CopyFilesBuildPhase(key: key, value: node)
           copyFilesPhases.append(buildPhase)
         case "PBXAggregateTarget":
           break
