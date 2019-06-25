@@ -81,8 +81,8 @@ struct BuildConfigurationList: TitledNode {
 }
 
 public struct BuildFile: CustomDebugStringConvertible {
-  let key: String
-  let fileRef: String
+  public let key: String
+  public let fileRef: String
   
   public var debugDescription: String
   
@@ -138,9 +138,9 @@ public struct CopyFilesBuildPhase: CustomDebugStringConvertible {
 }
 
 public struct FileReference: TitledNode {
-  let title: String
-  let id: String
-  let name: String? // presence of a "name" indicates a path that doesn't match the filesystem
+  public let title: String
+  public let id: String
+  public let name: String? // presence of a "name" indicates a path that doesn't match the filesystem
   let path: String
   let explicitFileType: String?
   let lastKnownFileType: String?
@@ -242,7 +242,7 @@ struct LegacyTarget: CustomDebugStringConvertible {
 }
 
 public struct NativeTarget: CustomDebugStringConvertible {
-  let name: String
+  public let name: String
   let productName: String
   let productType: String
   let buildRules: [String]
