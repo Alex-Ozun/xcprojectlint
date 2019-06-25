@@ -49,9 +49,9 @@ extension Dictionary where Key == String {
 }
 
 public struct BuildConfiguration: TitledNode {
-  public var title: String
-  public var id: String
-  public var debugDescription: String
+  public let title: String
+  public let id: String
+  public let debugDescription: String
 
   public let name: String
   public let baseConfigurationReference: String?
@@ -70,9 +70,9 @@ public struct BuildConfiguration: TitledNode {
 }
 
 public struct BuildConfigurationList: TitledNode {
-  public var title: String
-  public var id: String
-  public var debugDescription: String
+  public let title: String
+  public let id: String
+  public let debugDescription: String
   public let buildConfigurations: [String]
   public let defaultConfigurationName: String?
   public let defaultConfigurationIsVisible: Bool
@@ -121,7 +121,7 @@ public struct ContainerItemProxy: CustomDebugStringConvertible {
   }
 }
 
-public struct CopyFilesBuildPhase: FileContainer, CustomDebugStringConvertible {
+public struct CopyFilesBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
   public let id: String
   public let files: [String]
   public let name: String
@@ -177,7 +177,7 @@ public struct FileReference: TitledNode {
   }
 }
 
-public struct FrameworksBuildPhase: FileContainer, CustomDebugStringConvertible {
+public struct FrameworksBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
   public let id: String
   public let files: [String]
   public var debugDescription: String
@@ -306,7 +306,7 @@ public struct ProjectNode: CustomDebugStringConvertible {
   }
 }
 
-public struct ResourcesBuildPhase: FileContainer, CustomDebugStringConvertible {
+public struct ResourcesBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
   public let id: String
   public let files: [String]
   public var debugDescription: String
@@ -352,7 +352,7 @@ public struct ShellScriptBuildPhase: FileContainer, CustomDebugStringConvertible
   }
 }
 
-public struct SourcesBuildPhase: FileContainer, CustomDebugStringConvertible {
+public struct SourcesBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
   public let id: String
   public let files: [String]
   public let runOnlyForDeploymentPostprocessing: Bool
