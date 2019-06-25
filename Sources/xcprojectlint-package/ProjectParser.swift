@@ -14,6 +14,10 @@
 
 import Foundation
 
+public protocol FileContainer {
+  var files: [String] { get }
+}
+
 public protocol Identifiable {
   var id: String { get }
 }
@@ -116,7 +120,7 @@ struct ContainerItemProxy: CustomDebugStringConvertible {
   }
 }
 
-public struct CopyFilesBuildPhase: CustomDebugStringConvertible {
+public struct CopyFilesBuildPhase: FileContainer, CustomDebugStringConvertible {
   public let id: String
   let dstSubfolderSpec: String
   public let files: [String]
@@ -172,7 +176,7 @@ public struct FileReference: TitledNode {
   }
 }
 
-public struct FrameworksBuildPhase: CustomDebugStringConvertible {
+public struct FrameworksBuildPhase: FileContainer, CustomDebugStringConvertible {
   public let id: String
   public let files: [String]
   let runOnlyForDeploymentPostprocessing: Bool
@@ -301,7 +305,7 @@ struct ProjectNode: CustomDebugStringConvertible {
   }
 }
 
-public struct ResourcesBuildPhase: CustomDebugStringConvertible {
+public struct ResourcesBuildPhase: FileContainer, CustomDebugStringConvertible {
   public let id: String
   public let files: [String]
   let runOnlyForDeploymentPostprocessing: Bool
@@ -319,9 +323,9 @@ public struct ResourcesBuildPhase: CustomDebugStringConvertible {
   }
 }
 
-struct ShellScriptBuildPhase: CustomDebugStringConvertible {
+public struct ShellScriptBuildPhase: FileContainer, CustomDebugStringConvertible {
   let showEnvVarsInLog: Bool
-  let files: [String]
+  public let files: [String]
   let name: String
   let runOnlyForDeploymentPostprocessing: Bool
   let shellPath: String
@@ -329,7 +333,7 @@ struct ShellScriptBuildPhase: CustomDebugStringConvertible {
   let outputPaths: [String]
   let shellScript: String
   let buildActionMask: String
-  var debugDescription: String
+  public var debugDescription: String
   
   init(value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["showEnvVarsInLog", "files", "name", "runOnlyForDeploymentPostprocessing", "shellPath", "inputPaths", "outputPaths", "shellScript", "buildActionMask"])
@@ -347,7 +351,7 @@ struct ShellScriptBuildPhase: CustomDebugStringConvertible {
   }
 }
 
-public struct SourcesBuildPhase: CustomDebugStringConvertible {
+public struct SourcesBuildPhase: FileContainer, CustomDebugStringConvertible {
   public let id: String
   public let files: [String]
   let runOnlyForDeploymentPostprocessing: Bool
