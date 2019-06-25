@@ -114,7 +114,7 @@ struct ContainerItemProxy: CustomDebugStringConvertible {
 }
 
 public struct CopyFilesBuildPhase: CustomDebugStringConvertible {
-  let id: String
+  public let id: String
   let dstSubfolderSpec: String
   let files: [String]
   public let name: String
@@ -345,7 +345,7 @@ struct ShellScriptBuildPhase: CustomDebugStringConvertible {
 }
 
 public struct SourcesBuildPhase: CustomDebugStringConvertible {
-  let id: String
+  public let id: String
   let files: [String]
   let runOnlyForDeploymentPostprocessing: Bool
   let buildActionMask: String
