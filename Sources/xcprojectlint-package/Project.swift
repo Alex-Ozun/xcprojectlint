@@ -21,18 +21,18 @@ public struct Project {
   
   let buildConfigurationLists: Dictionary<String, BuildConfigurationList>
   let buildConfigurations: [BuildConfiguration]
-  let buildFiles: Dictionary<String, BuildFile>
+  public let buildFiles: Dictionary<String, BuildFile>
   let containerItemProxies: [ContainerItemProxy]
-  let copyFilesPhases: [CopyFilesBuildPhase]
-  let fileReferences: Dictionary<String, FileReference>
+  public let copyFilesPhases: [CopyFilesBuildPhase]
+  public let fileReferences: Dictionary<String, FileReference>
   let frameworksBuildPhases: [FrameworksBuildPhase]
   let groups: Dictionary<String, Group>
   let legacyTargets: [LegacyTarget]
-  let nativeTargets: [NativeTarget]
+  public let nativeTargets: [NativeTarget]
   let projectNodes: [ProjectNode]
-  let resourceBuildPhases: [ResourcesBuildPhase]
+  public let resourceBuildPhases: [ResourcesBuildPhase]
   let shellScriptBuildPhases: [ShellScriptBuildPhase]
-  let sourcesBuildPhases: [SourcesBuildPhase]
+  public let sourcesBuildPhases: [SourcesBuildPhase]
   let targetDependencies: [TargetDependency]
   let titles: Dictionary<String, String>
   let variantGroups: [VariantGroup]
