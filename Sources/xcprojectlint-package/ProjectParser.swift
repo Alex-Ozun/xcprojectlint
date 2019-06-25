@@ -250,7 +250,7 @@ public struct NativeTarget: CustomDebugStringConvertible {
   let dependencies: [String]
   let buildConfigurationList: String
   let buildPhases: [String]
-  var debugDescription: String
+  public var debugDescription: String
   
   init(value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["name", "productName", "productType", "buildRules", "productReference", "dependencies", "buildConfigurationList", "buildPhases"])
