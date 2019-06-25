@@ -137,7 +137,7 @@ struct CopyFilesBuildPhase: CustomDebugStringConvertible {
   }
 }
 
-struct FileReference: TitledNode {
+public struct FileReference: TitledNode {
   let title: String
   let id: String
   let name: String? // presence of a "name" indicates a path that doesn't match the filesystem
@@ -241,7 +241,7 @@ struct LegacyTarget: CustomDebugStringConvertible {
   }
 }
 
-struct NativeTarget: CustomDebugStringConvertible {
+public struct NativeTarget: CustomDebugStringConvertible {
   let name: String
   let productName: String
   let productType: String
@@ -574,7 +574,7 @@ func identifyUnparsedKeys(_ values: Dictionary<String, Any>, knownKeys: [String]
 /// We start this mess off by grabbing the `objects` node out of the top
 /// level dictiopnary. It contains pretty much everything interesting.
 ///
-class ProjectParser {
+public class ProjectParser {
   private let objects: [String: Any]
   private let rootObject: String
   private let projectPath: String
