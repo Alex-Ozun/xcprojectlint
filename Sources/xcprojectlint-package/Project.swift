@@ -25,7 +25,7 @@ public struct Project {
   let containerItemProxies: [ContainerItemProxy]
   public let copyFilesPhases: [CopyFilesBuildPhase]
   public let fileReferences: Dictionary<String, FileReference>
-  let frameworksBuildPhases: [FrameworksBuildPhase]
+  public let frameworksBuildPhases: [FrameworksBuildPhase]
   let groups: Dictionary<String, Group>
   let legacyTargets: [LegacyTarget]
   public let nativeTargets: [NativeTarget]

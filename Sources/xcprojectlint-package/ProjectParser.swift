@@ -299,8 +299,8 @@ struct ProjectNode: CustomDebugStringConvertible {
 }
 
 public struct ResourcesBuildPhase: CustomDebugStringConvertible {
-  let id: String
-  let files: [String]
+  public let id: String
+  public let files: [String]
   let runOnlyForDeploymentPostprocessing: Bool
   let buildActionMask: String
   public var debugDescription: String
