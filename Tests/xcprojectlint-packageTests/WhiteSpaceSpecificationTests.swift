@@ -14,6 +14,8 @@
 
 @testable import xcprojectlint_package
 import XCTest
+import XcodeProj
+import PathKit
 
 final class WhiteSpaceSpecificationTests: XCTestCase {
   func test_whiteSpaceSpecifiersAreAbsent_returnsClean() {
@@ -41,4 +43,18 @@ final class WhiteSpaceSpecificationTests: XCTestCase {
       XCTFail("Failed to initialize test")
     }
   }
+    
+    func test_whiteSpaceSpecifiersArePresent_returnsError2() {
+      do {
+        let testData = Bundle.test.testData()
+        let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
+        let path = Path(testData)
+        let xcodeproj = try XcodeProj(path: path)
+        
+        XCTAssertEqual(checkForWhiteSpaceSpecifications2(xcodeproj, path.parent(), errorReporter: errorReporter), EX_SOFTWARE)
+      } catch {
+        print(error.localizedDescription)
+        XCTFail("Failed to initialize test")
+      }
+    }
 }

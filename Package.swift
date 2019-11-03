@@ -29,6 +29,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-package-manager.git", from: "0.1.0"),
+        .package(url: "https://github.com/tuist/xcodeproj.git", .upToNextMajor(from: "7.1.0")),
     ],
     targets: [
         .target(
@@ -36,7 +37,7 @@ let package = Package(
             dependencies: ["xcprojectlint-package"]),
         .target(
             name: "xcprojectlint-package",
-            dependencies: ["SPMUtility"]),
+            dependencies: ["SPMUtility", "XcodeProj"]),
         .testTarget(
             name: "xcprojectlint-packageTests",
             dependencies: ["xcprojectlint-package"]),

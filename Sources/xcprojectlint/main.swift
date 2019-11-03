@@ -16,6 +16,8 @@ import Basic
 import Foundation
 import SPMUtility
 import xcprojectlint_package
+import XcodeProj
+import PathKit
 
 func noteSuccess() {
   let processInfo = ProcessInfo.processInfo
@@ -78,6 +80,8 @@ func main() -> Int32 {
       validations = Validation.allValidations()
     }
 
+    let path = Path(proj.path.description) // Your project path
+    let xcodeproj = try! XcodeProj(path: path)
     let errorReporter = ErrorReporter(pbxprojPath: proj.path.description, reportKind: reportKind)
     let project = try Project(proj.path.description, errorReporter: errorReporter)
     var scriptResult: Int32 = EX_OK

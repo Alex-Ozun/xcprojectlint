@@ -13,6 +13,8 @@
  */
 
 import Foundation
+import XcodeProj
+import PathKit
 
 public func checkForInternalProjectSettings(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
   var scriptResult = EX_OK
@@ -69,4 +71,55 @@ public func checkForInternalProjectSettings(_ project: Project, errorReporter: E
 enum ProjectSettingsError: String, Error {
   // Some assumption we've made about the shape of a project file was wrong.
   case problemLocatingMatchingConfiguration = "We found buildSettings, but were not able to find the matching configuration."
+}
+
+public func checkForInternalProjectSettings2(_ project: XcodeProj, _ path: Path, _ projectText: String, errorReporter: ErrorReporter) -> Int32 {
+  let errors =
+    project.pbxproj.buildConfigurations
+    .filter { !$0.buildSettings.isEmpty }
+    .map { buildConfiguration -> String in
+        let list = project.pbxproj.configurationLists.first { $0.buildConfigurations.contains(buildConfiguration) }
+        let configurationOwner = try? list?.objectWithConfigurationList()
+        var configurationOwnerDescription: String?
+        switch configurationOwner {
+        case let project as PBXProject :
+            configurationOwnerDescription = "PBXProject \(project.name)"
+        case let nativeTarget as PBXNativeTarget :
+            configurationOwnerDescription = "PBXNativeTarget \(nativeTarget.name)"
+        case let legacyTarget as PBXLegacyTarget :
+            configurationOwnerDescription = "PBXLegacyTarget \(legacyTarget.name)"
+        case let aggregateTarget as PBXAggregateTarget :
+            configurationOwnerDescription = "PBXAggregateTarget \(aggregateTarget.name)"
+        default:
+            break
+        }
+
+        // see if we can find the buildSettings node closest to this build configuration
+        var currentLine = 0
+        var foundKey = false
+        for line in projectText.components(separatedBy: CharacterSet.newlines) {
+          currentLine += 1
+          if !foundKey {
+            if line.contains(buildConfiguration.uuid) {
+              foundKey = true
+            }
+          } else {
+            if line.contains("buildSettings") {
+              break
+            }
+          }
+        }
+
+        let errStr: String
+        // NOTE: The spaces around the error: portion of the string are required with Xcode 8.3. Without them, no output gets reported in the Issue Navigator.
+        if let parentObjectDescription = configurationOwnerDescription {
+            errStr = "\(XcodeProj.pbxprojPath(path)):\(currentLine): \(errorReporter.reportKind.logEntry) \(parentObjectDescription) (\(buildConfiguration.name)) has settings defined in the project file.\n"
+        } else {
+          errStr = "\(XcodeProj.pbxprojPath(path)):\(currentLine): \(errorReporter.reportKind.logEntry) \(buildConfiguration.name) has settings defined at the project level.\n"
+        }
+
+        return errStr
+    }
+    errors.forEach(ErrorReporter.report)
+    return errors.isEmpty ? EX_OK : errorReporter.reportKind.returnType
 }
